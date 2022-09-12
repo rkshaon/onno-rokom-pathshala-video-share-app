@@ -6,6 +6,8 @@ from video_share_app.utility import auth_user
 
 from video_api.serializers import VideoSerializer
 
+from video_api.models import Videoes
+
 
 @api_view(['POST'])
 def upload_video_api(request):
@@ -42,6 +44,17 @@ def upload_video_api(request):
             'message':  video_serializer.errors,
         }, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
+    return Response({
+        'status': True,
+        'data': data,
+    })
+
+
+@api_view(['GET'])
+def get_uploaded_videoes(request):
+    user = auth_user(request)
+    data = VideoSerializer(Videoes.objects.filter(uploaded_by=user).order_by('-uploaded_date_time'), many=True).data
+    
     return Response({
         'status': True,
         'data': data,

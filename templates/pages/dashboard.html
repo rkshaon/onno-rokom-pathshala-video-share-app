@@ -14,30 +14,11 @@ $(document).ready(function(){
     if (localStorage.getItem("token") === null) {
         location.href = 'http://127.0.0.1:8000';
     }
-      
-    $("#register-button1").click(function(){
-        let name = document.getElementById("user-name").value;
-        let username = document.getElementById("user-username").value;
-        let email = document.getElementById("user-email").value;
-        let password1 = document.getElementById("user-password1").value;
-        let password2 = document.getElementById("user-password2").value;
-
-        if (password1 !== password2) {
-            alert('Your password does not matched!')
-            location.reload();
-        }
-
-        let userData = {
-            'name': name,
-            'username': username,
-            'email': email,
-            'password': password1,
-            'csrfmiddlewaretoken': csrftoken
-        }
-
-        $.post("http://127.0.0.1:8000/user-api/register", userData, function(data, status){
-            location.href = 'http://127.0.0.1:8000/login';
-        });
+    // https://stackoverflow.com/a/59630222/7754931
+    $.ajax({
+        url: "http://127.0.0.1:8000/video-api/uploaded-list",
+        type: 'GET',
+        headers: {"Authorization": localStorage.getItem('token')}
     });
 });
 </script>
