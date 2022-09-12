@@ -39,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'video_share_pages',
-    'user_api',
     'rest_framework',
+    'video_share_pages',
+    'user_api',    
+    'video_api',
 ]
 
 MIDDLEWARE = [
