@@ -14,6 +14,8 @@ function getCookie(name) {
     return cookieValue;
 }
 
+
+
 const csrftoken = getCookie('csrftoken');
 
 let token = null;
@@ -79,3 +81,5 @@ $(document).ready(function(){
         location.href = 'http://127.0.0.1:8000';
     });
 });
+
+export { getCookie };

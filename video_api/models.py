@@ -5,6 +5,7 @@ class Videoes(models.Model):
     youtube_video_id = models.CharField(max_length=255, null=False, blank=False, unique=True)
     link = models.TextField(null=False, blank=False)
     embed_link = models.TextField(null=False, blank=False)
+    views_count = models.BigIntegerField(default=0)
     uploaded_by = models.ForeignKey('user_api.User', on_delete=models.CASCADE)
     uploaded_date_time = models.DateTimeField(auto_now_add=True)
 

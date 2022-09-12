@@ -8,11 +8,42 @@
     </div>
 </div>
 
-<script>
+<script type="module">
+    // https://stackoverflow.com/a/50174923/7754931
+    // import * as MainScript from '../../static/js/script.js';
+    import { getCookie } from '../../static/js/script.js';
+    let csrf_token = getCookie('csrftoken');
+    console.log(('token: ', csrf_token));
+    // MainScript.getCookie('csrftoken');
+    
     $(document).ready(function(){
         let currentURL = window.location.href;
         let videoID = currentURL.substring(currentURL.lastIndexOf('/') + 1);        
         let videoDetailsURL = 'http://127.0.0.1:8000/video-api/details/' + videoID;
+
+        let videoViewIncreaseURL = 'http://127.0.0.1:8000/video-api/increase-video-view/' + videoID;
+
+        // console.log('cookies', document.cookie);
+        // let csrf_token = document.cookie.split("csrftoken");
+        // console.log(csrf_token);
+        
+
+        console.log(("URL: ", videoViewIncreaseURL));
+
+        $.ajax({
+            url: videoViewIncreaseURL,
+            type: 'POST',
+            contentType : 'application/json',
+            // headers: { Authorization: localStorage.getItem("token")},
+            headers: {"X-CSRFToken": csrf_token},
+            error: function(err) {
+                console.log(err.status);
+                console.log(err);
+            },
+            success: function(data) {
+                console.log(data);
+            }
+        });
 
         $.ajax({
             url: videoDetailsURL,
@@ -21,19 +52,26 @@
                 let div_content = '';
 
                 div_content += '<div>'
-                    div_content += '<iframe width="100%" height="100%" src="' + data.data['embed_link'] + '">'
+                div_content += '<iframe width="100%" height="100%" src="' + data.data['embed_link'] + '">'
                 div_content += '</iframe>'
                 div_content += '<div class="card">'
                 div_content += '<div class="card-header">'
                 div_content += data.data['name']
                 div_content += '</div>'
-                div_content += '<div class="card-footer">View: <b>0</b> Like: <b>0</b> Dislike: <b>0</b></div>'
+                div_content += '<div class="card-footer">'
+                div_content += '<button class="btn">View: <b>' + data.data['views_count'] + '</b></button>'
+                div_content += '<button class="btn">Like</button><b>0</b>'
+                div_content += '<button class="btn">Dislike</button><b>0</b>'
+                div_content += '<button class="btn">Details</button>'
+                div_content += '</div>'
                 div_content += '</div>'
                 div_content += '</div>'
     
                 document.getElementById("video-details").innerHTML = div_content;
             }
         });
+
+        
     });
 </script>
 {% endblock %}
