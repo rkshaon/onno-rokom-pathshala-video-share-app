@@ -1,0 +1,17 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Youtube</title>
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </head>
+    <body>        
+        {% block content %}
+        
+        {% endblock %}
+        <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    </body>
+</html>

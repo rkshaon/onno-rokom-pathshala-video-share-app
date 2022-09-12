@@ -1,0 +1,52 @@
+#table-title-div {
+    display: none;
+}
+
+#yearly-or-not-div {
+    display: none;
+}
+
+#year-div {
+    display: none;
+}
+
+#how-many-year-div {
+    display: none;
+}
+
+#fileToUpload {}
+
+.file-upload {
+    /* border: 1px solid black; */
+    color: #fff;
+    border-radius: 10px;
+    padding: 3px;
+    background-color: yellowgreen;
+    border: 1px solid yellowgreen;
+    font-weight: bold;
+}
+
+.file-upload input {
+    overflow: hidden;
+    width: 0;
+}
+
+.file-upload:hover {
+    border: 1px solid yellowgreen;
+    /* font-weight: bold; */
+    /* background-color: #fff; */
+    background-color: transparent;
+    color: yellowgreen;
+}
+
+#wrong-format-data {
+    display: none;
+}
+
+#column-list-div {
+    display: none;
+}
+
+#btn-div {
+    padding-top: 15px;
+}
