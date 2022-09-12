@@ -19,4 +19,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('video_share_pages.urls')),
+    path('user-api/', include('user_api.urls')),
 ]

@@ -8,6 +8,8 @@
         <div class="col-3"></div>
             <div class="col-6">
                 <h2>Register</h2>
+                <!-- <form action="#">
+                    {% csrf_token %} -->
                     <div class="form-group">
                         <label for="exampleInputUsername">Name</label>
                         <input id="user-name" type="text" class="form-control">
@@ -24,11 +26,12 @@
                         <label for="exampleInputPassword1">Confirm Password</label>
                         <input id="user-password2" type="password" class="form-control">
                     </div>
-                    <button type="submit" class="btn btn-primary mt-3" onclick="signUpForm()">
+                    <button type="submit" class="btn btn-primary mt-3" id="register-button">
                         Sign Up
                     </button>
-                <br>
-                <small id="emailHelp" class="form-text text-muted">Already have account? <a href="login">Log in</a></small>
+                    <br>
+                    <small id="emailHelp" class="form-text text-muted">Already have account? <a href="login">Log in</a></small>
+                <!-- </form> -->
             </div>
         <div class="col-3"></div>
     </div>
