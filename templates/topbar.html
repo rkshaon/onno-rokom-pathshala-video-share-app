@@ -5,20 +5,25 @@
         <div class="pt-3" style="font-weight: bold; color: #FF0000;">
             <a href="{% url 'home' %}" style="text-decoration: none; color: #FF0000;">Video Sharing App</a>
         </div>
-        <div class="" style="color: #fff; font-weight: bold; padding-top: 10px;">
+        <div class="" style="font-weight: bold; padding-top: 10px;">
             <ul class="d-flex" style="list-style: none;">
-                <li style="padding-right: 10px;">Authorised User's Name Will be appear here.</li>
-                <li style="padding-right: 10px;">
+                <li style="padding-right: 10px;">Name</li>
+                <li style="padding-right: 10px;" id="icon-register">
                     <a href="{% url 'register' %}" style="text-decoration: none;">
                         Registration
                     </a>
                 </li>
-                <li style="padding-right: 10px;">
+                <li style="padding-right: 10px;" id="icon-login">
                     <a href="{% url 'login' %}" style="text-decoration: none;">
                         Login
                     </a>
                 </li>
-                <li style="padding-right: 10px;">
+                <li style="padding-right: 10px;" id="icon-logout">
+                    <a href="#" style="text-decoration: none;" id="logout-button">
+                        Logout
+                    </a>
+                </li>
+                <!-- <li style="padding-right: 10px;">
                     <a href="#">
                         <img
                             src="{% static 'icons/right-from-bracket-solid.svg' %}"
@@ -26,7 +31,7 @@
                             height="25"
                         >
                     </a>
-                </li>
+                </li> -->
                 <li>
                     <a href="{% url 'dashboard' %}">
                         <img
