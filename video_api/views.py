@@ -9,6 +9,16 @@ from video_api.serializers import VideoSerializer
 from video_api.models import Videoes
 
 
+@api_view(['GET'])
+def get_all_videoes(request):
+    data = VideoSerializer(Videoes.objects.all().order_by('-id'), many=True).data
+
+    return Response({
+        'status': True,
+        'data': data,
+    })
+
+
 @api_view(['POST'])
 def upload_video_api(request):
     if 'token' not in request.data:

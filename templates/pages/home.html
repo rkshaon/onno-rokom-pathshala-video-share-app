@@ -4,47 +4,33 @@
 
 {% block content%}
 <div class="container">
-    <div class="row">
-        <div class="col-3 mb-3">
-            <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY">
-            </iframe>
-        </div>
-        <div class="col-3">
-            <iframe src="https://www.youtube.com/embed/yklDT_Km15E">
-            </iframe>
-        </div>
-        <div class="col-3">
-            <iframe src="https://www.youtube.com/embed/5fP2n-V-EQY">
-            </iframe>
-        </div>
-        <div class="col-3">
-            <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY">
-            </iframe>
-        </div>
-        <div class="col-3">
-            <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY">
-            </iframe>
-        </div>
-        <div class="col-3">
-            <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY">
-            </iframe>
-        </div>
-        <div class="col-3">
-            <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY">
-            </iframe>
-        </div>
-        <div class="col-3">
-            <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY">
-            </iframe>
-        </div>
-        <div class="col-3">
-            <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY">
-            </iframe>
-        </div>
-        <div class="col-3">
-            <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY">
-            </iframe>
-        </div>
+    <div class="row" id="home-video-list">
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            url: "http://127.0.0.1:8000/video-api/",
+            type: 'GET',
+            success: function(data) {
+                let div_content = '';
+                
+                let uploaded_video_data_list = data.data;
+    
+                uploaded_video_data_list.forEach(element => {
+                    div_content += '<div class="col-3 mt-3 mb-3">'
+                    div_content += '<iframe src="' + element['embed_link'] + '">'
+                    div_content += '</iframe>'
+                    div_content += '<div class="card">'
+                    div_content += '<div class="card-footer">View: <b>0</b> Like: <b>0</b> Dislike: <b>0</b></div>'
+                    div_content += '</div>'
+                    div_content += '</div>'
+                });
+    
+                document.getElementById("home-video-list").innerHTML = div_content;
+            }
+        });
+    });
+    </script>
 {% endblock %}
