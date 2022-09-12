@@ -7,6 +7,7 @@ from video_share_app.utility import auth_user
 from video_api.serializers import VideoSerializer
 
 from video_api.models import Videoes
+from video_api.models import VideoLikeDislike
 
 
 @api_view(['GET'])
@@ -86,6 +87,23 @@ def increase_video_view_count(request, video_id):
 
     video.views_count += 1
     video.save()
+
+    return Response({
+        'status': True
+    })
+
+
+@api_view(['POST'])
+def like_or_dislike_video(request, video_id):
+    user = auth_user(request)
+    video = Videoes.objects.get(youtube_video_id=video_id)
+
+    likeordislike, created = VideoLikeDislike.objects.get_or_create(video_id=video, given_by=user)
+
+    likeordislike.like = request.data['like']
+    likeordislike.dislike = request.data['dislike']
+
+    likeordislike.save()
 
     return Response({
         'status': True
