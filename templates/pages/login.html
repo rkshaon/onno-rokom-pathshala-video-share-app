@@ -1,1 +1,28 @@
-Login
+{% load static %}
+
+{% include 'base.html' %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3"></div>
+            <div class="col-6">
+                <h2>Login</h2>
+                    <div class="form-group">
+                        <label for="login-user-email">Email address</label>
+                        <input id="login-user-email" type="text" class="form-control">
+                    </div>                
+                    <div class="form-group">
+                        <label for="login-user-password">Password</label>
+                        <input id="login-user-password" type="password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3" id="login-button">
+                        Log in
+                    </button>
+                    <br>
+                    <small id="emailHelp" class="form-text text-muted">Don't have account? <a href="{% url 'register' %}">Register</a></small>
+            </div>
+        <div class="col-3"></div>
+    </div>
+</div>
+{% endblock %}
