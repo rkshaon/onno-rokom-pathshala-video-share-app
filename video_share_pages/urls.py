@@ -4,4 +4,5 @@ from video_share_pages import views
 
 urlpatterns = [
     path('', views.home_page, name='home'),
+    path('dashboard', views.dashboard_page, name='dashboard'),
 ]
