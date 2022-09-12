@@ -6,7 +6,7 @@
 <div class="container">
     <a href="http://127.0.0.1:8000/dashboard" class="btn btn-secondary">Uploaded Videos List</a>
     <a href="http://127.0.0.1:8000/upload-video" class="btn btn-secondary">Upload Video</a>
-    <div class="row">
+    <div class="row" id="uploaded-video-list">
     </div>
 </div>
 <script>
@@ -18,7 +18,24 @@ $(document).ready(function(){
     $.ajax({
         url: "http://127.0.0.1:8000/video-api/uploaded-list",
         type: 'GET',
-        headers: {"Authorization": localStorage.getItem('token')}
+        headers: {"Authorization": localStorage.getItem('token')},
+        success: function(data) {
+            let div_content = '';
+            
+            let uploaded_video_data_list = data.data;
+
+            uploaded_video_data_list.forEach(element => {
+                div_content += '<div class="col-3 mt-3 mb-3">'
+                div_content += '<iframe src="' + element['embed_link'] + '">'
+                div_content += '</iframe>'
+                div_content += '<div class="card">'
+                div_content += '<div class="card-footer">View: <b>0</b> Like: <b>0</b> Dislike: <b>0</b></div>'
+                div_content += '</div>'
+                div_content += '</div>'
+            });
+
+            document.getElementById("uploaded-video-list").innerHTML = div_content;
+        }
     });
 });
 </script>
