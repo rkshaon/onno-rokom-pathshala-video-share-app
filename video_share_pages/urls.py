@@ -8,4 +8,5 @@ urlpatterns = [
     path('dashboard', views.dashboard_page, name='dashboard'),
     path('login', views.login_page, name='login'),
     path('register', views.register_page, name='register'),
+    path('upload-video', views.upload_video_page, name='upload'),
 ]

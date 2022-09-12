@@ -19,3 +19,8 @@ def register_page(request):
     context = {}
 
     return render(request, 'pages/register.html', context)
+
+def upload_video_page(request):
+    context = {}
+    
+    return render(request, 'pages/upload.html', context)

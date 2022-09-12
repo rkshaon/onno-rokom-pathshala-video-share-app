@@ -1,0 +1,48 @@
+{% load static %}
+
+{% include 'base.html' %}
+
+{% block content%}
+<div class="container">
+    <a href="http://127.0.0.1:8000/dashboard" class="btn btn-secondary">Uploaded Videos List</a>
+    <a href="http://127.0.0.1:8000/upload-video" class="btn btn-secondary">Upload Video</a>
+    <div class="row">
+        <div class="col-6">
+            <h2>Upload</h2>
+            <div class="form-group">
+                <label for="video-name">Name</label>
+                <input id="video-name" type="text" class="form-control">
+            </div>                
+            <div class="form-group">
+                <label for="video-link">Link</label>
+                <input id="video-link" type="text" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary mt-3" id="upload-button">
+                Upload
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+$(document).ready(function(){
+    if (localStorage.getItem("token") === null) {
+        location.href = 'http://127.0.0.1:8000';
+    }
+      
+    $("#upload-button").click(function(){
+        let name = document.getElementById("video-name").value;
+        let link = document.getElementById("video-link").value;
+
+        let videoData = {
+            'name': name,
+            'link': link,
+            'csrfmiddlewaretoken': csrftoken
+        }
+
+        $.post("http://127.0.0.1:8000/video-api/upload", videoData, function(data, status){
+            location.href = 'http://127.0.0.1:8000/dashboard';
+        });
+    });
+});
+</script>
+{% endblock %}
