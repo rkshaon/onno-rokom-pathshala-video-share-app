@@ -82,7 +82,6 @@ def get_video_details(request, video_id):
 
 @api_view(['POST'])
 def increase_video_view_count(request, video_id):
-    print('increase-video-view: ', video_id)
     video = Videoes.objects.get(youtube_video_id=video_id)
 
     video.views_count += 1
