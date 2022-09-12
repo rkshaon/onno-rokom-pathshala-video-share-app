@@ -19,8 +19,6 @@ const csrftoken = getCookie('csrftoken');
 let token = null;
 
 $(document).ready(function(){
-    // console.log(localStorage.getItem("token"));
-
     if (localStorage.getItem("token") !== null) {
         token = localStorage.getItem("token");
         document.getElementById("icon-register").style.display = 'none';
@@ -65,13 +63,9 @@ $(document).ready(function(){
         }
 
         $.post("http://127.0.0.1:8000/user-api/login", userData, function(data, status){
-            // console.log(data, status);
-            // console.log(data);
-            // console.log(data.data);
-            // console.log(data.data.token);
             localStorage.setItem("token", data.data.token);
             let token = localStorage.getItem("token");
-            console.log('token: ', token);
+            
             location.href = 'http://127.0.0.1:8000';
         });
     });
@@ -80,7 +74,7 @@ $(document).ready(function(){
         console.log('Logout button hit!');
         token = null;
         localStorage.removeItem("token");
-        // location.reload();
+        
         location.href = 'http://127.0.0.1:8000';
     });
 });
