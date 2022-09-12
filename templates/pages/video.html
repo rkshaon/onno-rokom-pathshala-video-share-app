@@ -21,9 +21,17 @@
             url: videoDetailsURL,
             type: 'GET',
             success: function(data) {
-                console.log(data);
-                // let div_content = '';
-                
+                console.log(data.data);
+                console.log(data.data['embed_link']);
+                let div_content = '';
+                div_content += '<div>'
+                // div_content += '<iframe onload="this.width=screen.width;this.height=screen.height;" src="' + data.data['embed_link'] + '">'
+                    div_content += '<iframe width="100%" height="100%" src="' + data.data['embed_link'] + '">'
+                div_content += '</iframe>'
+                div_content += '<div class="card">'
+                div_content += '<div class="card-footer">View: <b>0</b> Like: <b>0</b> Dislike: <b>0</b></div>'
+                div_content += '</div>'
+                div_content += '</div>'
                 // let uploaded_video_data_list = data.data;
     
                 // uploaded_video_data_list.forEach(element => {
@@ -36,7 +44,7 @@
                 //     div_content += '</div>'
                 // });
     
-                // document.getElementById("home-video-list").innerHTML = div_content;
+                document.getElementById("video-details").innerHTML = div_content;
             }
         });
     });
