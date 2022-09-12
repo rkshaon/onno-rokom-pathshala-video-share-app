@@ -1,1 +1,44 @@
-dashboard
+{% load static %}
+
+{% include 'base.html' %}
+
+{% block content%}
+<div class="container">
+    <a href="http://127.0.0.1:8000/dashboard" class="btn btn-secondary">Uploaded Videos List</a>
+    <a href="http://127.0.0.1:8000/upload-video" class="btn btn-secondary">Upload Video</a>
+    <div class="row">
+    </div>
+</div>
+<script>
+$(document).ready(function(){
+    if (localStorage.getItem("token") === null) {
+        location.href = 'http://127.0.0.1:8000';
+    }
+      
+    $("#register-button1").click(function(){
+        let name = document.getElementById("user-name").value;
+        let username = document.getElementById("user-username").value;
+        let email = document.getElementById("user-email").value;
+        let password1 = document.getElementById("user-password1").value;
+        let password2 = document.getElementById("user-password2").value;
+
+        if (password1 !== password2) {
+            alert('Your password does not matched!')
+            location.reload();
+        }
+
+        let userData = {
+            'name': name,
+            'username': username,
+            'email': email,
+            'password': password1,
+            'csrfmiddlewaretoken': csrftoken
+        }
+
+        $.post("http://127.0.0.1:8000/user-api/register", userData, function(data, status){
+            location.href = 'http://127.0.0.1:8000/login';
+        });
+    });
+});
+</script>
+{% endblock %}

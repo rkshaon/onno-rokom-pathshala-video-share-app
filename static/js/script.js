@@ -22,8 +22,9 @@ $(document).ready(function(){
     if (localStorage.getItem("token") !== null) {
         token = localStorage.getItem("token");
         document.getElementById("icon-register").style.display = 'none';
-        document.getElementById("icon-login").style.display = 'none';
+        document.getElementById("icon-login").style.display = 'none';        
     } else {
+        document.getElementById("icon-dashboard").style.display = 'none';
         document.getElementById("icon-logout").style.display = 'none';
     }
       
