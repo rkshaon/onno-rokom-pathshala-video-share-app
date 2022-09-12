@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'video_share_pages',
+    'user_api',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
