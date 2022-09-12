@@ -14,3 +14,8 @@ def login_page(request):
     context = {}
 
     return render(request, 'pages/login.html', context)
+
+def register_page(request):
+    context = {}
+
+    return render(request, 'pages/register.html', context)
