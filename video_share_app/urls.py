@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('video_share_pages.urls')),
     path('user-api/', include('user_api.urls')),
+    path('video-api/', include('video_api.urls')),
 ]

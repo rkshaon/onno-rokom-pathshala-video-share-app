@@ -36,6 +36,7 @@ $(document).ready(function(){
         let videoData = {
             'name': name,
             'link': link,
+            'token': localStorage.getItem("token"),
             'csrfmiddlewaretoken': csrftoken
         }
 

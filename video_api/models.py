@@ -1,3 +1,12 @@
 from django.db import models
 
-# Create your models here.
+class Videoes(models.Model):
+    name = models.CharField(max_length=255, null=True, blank=True)
+    youtube_video_id = models.CharField(max_length=255, null=False, blank=False, unique=True)
+    link = models.TextField(null=False, blank=False)
+    embed_link = models.TextField(null=False, blank=False)
+    uploaded_by = models.ForeignKey('user_api.User', on_delete=models.CASCADE)
+    uploaded_date_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.uploaded_by.name) + " " + str(self.name) + " " + str(self.youtube_video_id)
