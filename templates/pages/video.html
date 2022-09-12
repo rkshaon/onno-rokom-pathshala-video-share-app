@@ -1,0 +1,44 @@
+{% load static %}
+
+{% include 'base.html' %}
+
+{% block content%}
+<div class="container">
+    <div class="row" id="video-details">
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        let currentURL = window.location.href;
+        // console.log(currentURL);
+        // var url = 'http://www.site.com/234234234';
+        let videoID = currentURL.substring(currentURL.lastIndexOf('/') + 1);
+        // alert(videoID);
+        console.log(videoID);
+        videoDetailsURL = 'http://127.0.0.1:8000/video-api/' + videoID;
+        $.ajax({
+            url: videoDetailsURL,
+            type: 'GET',
+            success: function(data) {
+                console.log(data);
+                // let div_content = '';
+                
+                // let uploaded_video_data_list = data.data;
+    
+                // uploaded_video_data_list.forEach(element => {
+                //     div_content += '<div class="col-3 mt-3 mb-3">'
+                //     div_content += '<iframe src="' + element['embed_link'] + '">'
+                //     div_content += '</iframe>'
+                //     div_content += '<div class="card">'
+                //     div_content += '<div class="card-footer">View: <b>0</b> Like: <b>0</b> Dislike: <b>0</b></div>'
+                //     div_content += '</div>'
+                //     div_content += '</div>'
+                // });
+    
+                // document.getElementById("home-video-list").innerHTML = div_content;
+            }
+        });
+    });
+    </script>
+{% endblock %}

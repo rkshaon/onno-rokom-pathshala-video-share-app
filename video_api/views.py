@@ -69,3 +69,13 @@ def get_uploaded_videoes(request):
         'status': True,
         'data': data,
     })
+
+
+@api_view(['GET'])
+def get_video_details(request, video_id):
+    data = VideoSerializer(Videoes.objects.get(youtube_video_id=video_id), many=False).data
+
+    return Response({
+        'status': True,
+        'data': data,
+    })
