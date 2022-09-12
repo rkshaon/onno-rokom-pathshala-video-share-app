@@ -62,7 +62,11 @@ def upload_video_api(request):
 
 @api_view(['GET'])
 def get_uploaded_videoes(request):
+    # return Response({
+    #     'status': True
+    # })
     user = auth_user(request)
+    print(user)
     data = VideoSerializer(Videoes.objects.filter(uploaded_by=user).order_by('-uploaded_date_time'), many=True).data
     
     return Response({
