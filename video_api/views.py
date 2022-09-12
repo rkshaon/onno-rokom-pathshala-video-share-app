@@ -5,6 +5,7 @@ from rest_framework import status
 from video_share_app.utility import auth_user
 
 from video_api.serializers import VideoSerializer
+from video_api.serializers import VideoLikedOrDislikedSerializer
 
 from video_api.models import Videoes
 from video_api.models import VideoLikeDislike
@@ -74,7 +75,37 @@ def get_uploaded_videoes(request):
 
 @api_view(['GET'])
 def get_video_details(request, video_id):
-    data = VideoSerializer(Videoes.objects.get(youtube_video_id=video_id), many=False).data
+    video = Videoes.objects.get(youtube_video_id=video_id)
+    data = VideoSerializer(video, many=False).data
+    liked = VideoLikeDislike.objects.filter(video_id=video, like=True)
+    disliked = VideoLikeDislike.objects.filter(video_id=video, dislike=True)
+    
+    data['liked'] = VideoLikedOrDislikedSerializer(liked, many=True).data
+    data['disliked'] = VideoLikedOrDislikedSerializer(disliked, many=True).data
+    
+    # print('request: ', request)
+    token = request.headers.get('token')
+    if token is None:
+        token = token = request.COOKIES.get('token')
+    if token is None:
+        token = request.headers.get('Authorization')
+    print("it's token: ", token)
+    if token is not None:
+        user = auth_user(request)
+        # data['self_liked'] = VideoLikedOrDislikedSerializer()
+        one = VideoLikeDislike.objects.filter(video_id=video, like=True, given_by=user)
+        two = VideoLikeDislike.objects.filter(video_id=video, dislike=True, given_by=user)
+
+        print(len(one))
+        print(len(two))
+        # data['self_liked'] = 
+        print('then get soemthing')
+        data['self_liked'] = True if len(VideoLikeDislike.objects.filter(video_id=video, like=True, given_by=user)) > 0 else False
+        data['self_disliked'] = True if len(VideoLikeDislike.objects.filter(video_id=video, dislike=True, given_by=user)) > 0 else False
+    else:
+        data['self_liked'] = False
+        data['self_disliked'] = False
+        print('token is empty!')
 
     return Response({
         'status': True,
