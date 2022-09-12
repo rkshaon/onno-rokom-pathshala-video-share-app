@@ -11,19 +11,23 @@
                 <!-- <form action="#">
                     {% csrf_token %} -->
                     <div class="form-group">
-                        <label for="exampleInputUsername">Name</label>
+                        <label for="user-name">Name</label>
                         <input id="user-name" type="text" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
+                        <label for="user-username">Username</label>
+                        <input id="user-username" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="user-email">Email address</label>
                         <input id="user-email" type="text" class="form-control">
                     </div>                
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
+                        <label for="user-password1">Password</label>
                         <input id="user-password1" type="password" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Confirm Password</label>
+                        <label for="user-password2">Confirm Password</label>
                         <input id="user-password2" type="password" class="form-control">
                     </div>
                     <button type="submit" class="btn btn-primary mt-3" id="register-button">

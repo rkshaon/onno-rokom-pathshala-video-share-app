@@ -59,6 +59,7 @@ const csrftoken = getCookie('csrftoken');
 $(document).ready(function(){
     $("#register-button").click(function(){
         let name = document.getElementById("user-name").value;
+        let username = document.getElementById("user-username").value;
         let email = document.getElementById("user-email").value;
         let password1 = document.getElementById("user-password1").value;
         let password2 = document.getElementById("user-password2").value;
@@ -70,6 +71,7 @@ $(document).ready(function(){
 
         let userData = {
             'name': name,
+            'username': username,
             'email': email,
             'password': password1,
             'csrfmiddlewaretoken': csrftoken
@@ -78,7 +80,8 @@ $(document).ready(function(){
         // console.log(userData);
 
         $.post("http://127.0.0.1:8000/user-api/register", userData, function(data, status){
-            alert("data: " + data + "\nstatus: ", status);
+            // alert("data: " + data + "\nstatus: ", status);
+            console.log(status);
             console.log(data);
         });
     });
