@@ -10,11 +10,9 @@
 
 <script type="module">
     // https://stackoverflow.com/a/50174923/7754931
-    // import * as MainScript from '../../static/js/script.js';
     import { getCookie } from '../../static/js/script.js';
+
     let csrf_token = getCookie('csrftoken');
-    console.log(('token: ', csrf_token));
-    // MainScript.getCookie('csrftoken');
     
     $(document).ready(function(){
         let currentURL = window.location.href;
@@ -23,18 +21,10 @@
 
         let videoViewIncreaseURL = 'http://127.0.0.1:8000/video-api/increase-video-view/' + videoID;
 
-        // console.log('cookies', document.cookie);
-        // let csrf_token = document.cookie.split("csrftoken");
-        // console.log(csrf_token);
-        
-
-        console.log(("URL: ", videoViewIncreaseURL));
-
         $.ajax({
             url: videoViewIncreaseURL,
             type: 'POST',
             contentType : 'application/json',
-            // headers: { Authorization: localStorage.getItem("token")},
             headers: {"X-CSRFToken": csrf_token},
             error: function(err) {
                 console.log(err.status);
