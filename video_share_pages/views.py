@@ -9,3 +9,8 @@ def dashboard_page(request):
     context = {}
 
     return render(request, 'pages/dashboard.html', context)
+
+def login_page(request):
+    context = {}
+
+    return render(request, 'pages/login.html', context)
