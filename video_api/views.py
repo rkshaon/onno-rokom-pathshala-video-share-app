@@ -18,12 +18,10 @@ def get_all_videoes(request):
     data = VideoSerializer(Videoes.objects.all().order_by('-id'), many=True).data
 
     for d in data:
-        print('details: ', d['youtube_video_id'])
         video = Videoes.objects.get(youtube_video_id=d['youtube_video_id'])
-        print(video)
 
         like_or_dislike = VideoLikeDislike.objects.filter(video_id=video, like=True)
-        print(like_or_dislike)
+        
         d['like_count'] = len(VideoLikeDislike.objects.filter(video_id=video, like=True))
         d['dislike_count'] = len(VideoLikeDislike.objects.filter(video_id=video, dislike=True))
 
@@ -94,8 +92,6 @@ def get_video_details(request, video_id):
     
     data['liked'] = VideoLikedOrDislikedSerializer(liked, many=True).data
     data['disliked'] = VideoLikedOrDislikedSerializer(disliked, many=True).data
-    # data['liked'] = len(VideoLikeDislike.objects.filter(video_id=video, like=True))
-    # data['disliked'] = len(VideoLikeDislike.objects.filter(video_id=video, dislike=True))
     
     token = request.headers.get('token')
     if token is None:
@@ -106,19 +102,11 @@ def get_video_details(request, video_id):
     if token is not None:
         user = auth_user(request)
         
-        # one = VideoLikeDislike.objects.filter(video_id=video, like=True, given_by=user)
-        # two = VideoLikeDislike.objects.filter(video_id=video, dislike=True, given_by=user)
-
-        # print(len(one))
-        # print(len(two))
-        # # data['self_liked'] = 
-        # print('then get soemthing')
         data['self_liked'] = True if len(VideoLikeDislike.objects.filter(video_id=video, like=True, given_by=user)) > 0 else False
         data['self_disliked'] = True if len(VideoLikeDislike.objects.filter(video_id=video, dislike=True, given_by=user)) > 0 else False
     else:
         data['self_liked'] = False
         data['self_disliked'] = False
-        # print('token is empty!')
 
     return Response({
         'status': True,
