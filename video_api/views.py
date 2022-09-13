@@ -2,6 +2,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
+import operator
+
 from video_share_app.utility import auth_user
 
 from video_api.serializers import VideoSerializer
@@ -127,13 +129,35 @@ def increase_video_view_count(request, video_id):
 @api_view(['POST'])
 def like_or_dislike_video(request, video_id):
     user = auth_user(request)
+    like_dislike_data = request.data
     video = Videoes.objects.get(youtube_video_id=video_id)
 
     likeordislike, created = VideoLikeDislike.objects.get_or_create(video_id=video, given_by=user)
 
-    likeordislike.like = request.data['like']
-    likeordislike.dislike = request.data['dislike']
+    # likeordislike.like = request.data['like']
+    # likeordislike.dislike = request.data['dislike']
 
+    # likeordislike.save()
+    print('user: ', user)
+    print('front-end-data: ', like_dislike_data)
+    print('instance: ', likeordislike)
+    print('create-status: ', created)
+
+    print('like-type: ', type(like_dislike_data['like']), type(likeordislike.like))
+    print('dislike-type: ', type(like_dislike_data['dislike']), type(likeordislike.dislike))
+
+    if str(likeordislike.like).lower() != like_dislike_data['like']:
+        print('like-status-does-not-matched')
+        likeordislike.like = operator.not_(likeordislike.like)
+    else:
+        print('like-status-matched')
+    
+    if str(likeordislike.dislike).lower() != like_dislike_data['dislike']:
+        print('dislike-status-does-not-matched!')
+        likeordislike.dislike = operator.not_(likeordislike.dislike)
+    else:
+        print('dislike-status-matched')
+    
     likeordislike.save()
 
     return Response({

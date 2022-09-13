@@ -67,12 +67,17 @@
                 div_content += '<button class="btn">View: <b>' + data.data['views_count'] + '</b></button>'
 
                 if (data.data['self_liked'] === true) {
-                    div_content += '<button style="color: blue; font-weight: bold;" class="btn" onclick="likeBtn(' + "'" + String(videoID) + "'" + ')">Liked</button><b>' + data.data['liked'].length + '</b>'
+                    div_content += '<button style="color: blue; font-weight: bold;" class="btn" onclick="likeBtn(' + "'" + String(videoID) + "','false','false'" + ')">Liked</button><b>' + data.data['liked'].length + '</b>'
                 } else {
-                    div_content += '<button class="btn" onclick="likeBtn(' + "'" + String(videoID) + "'" + ')">Like</button><b>' + data.data['liked'].length + '</b>'
+                    div_content += '<button class="btn" onclick="likeBtn(' + "'" + String(videoID) + "','true','false'" + ')">Like</button><b>' + data.data['liked'].length + '</b>'
                 }
-
-                div_content += '<button class="btn">Dislike</button><b>' + data.data['disliked'].length + '</b>'
+                
+                if (data.data['self_disliked'] === true) {
+                    div_content += '<button style="color: blue; font-weight: bold;" class="btn" onclick="dislikeBtn(' + "'" + String(videoID) + "','false','false'" + ')">Disliked</button><b>' + data.data['disliked'].length + '</b>'
+                } else {
+                    div_content += '<button class="btn" onclick="dislikeBtn(' + "'" + String(videoID) + "','false','true'" + ')">Dislike</button><b>' + data.data['disliked'].length + '</b>'
+                }
+                
                 div_content += '<button class="btn">Details</button>'
                 div_content += '</div>'
                 div_content += '</div>'
@@ -85,19 +90,65 @@
         
     });
 
-    function likeBtn(id) {
+    function isLoggedIn() {
         if (localStorage.getItem("token") === null) {
             location.href = 'http://127.0.0.1:8000/login';
         }
+    }
+
+    function likeBtn(id, like, dislike) {
+        // if (localStorage.getItem("token") === null) {
+        //     location.href = 'http://127.0.0.1:8000/login';
+        // }
+        isLoggedIn();
 
         let videoLikeURL = 'http://127.0.0.1:8000/video-api/like-or-dislike/' + id;
+        
+        let likeDislikeData = {
+            'like': like,
+            'dislike': dislike
+        }
+
+        console.log('on-click-data: ', likeDislikeData);
 
         $.ajax({
             url: videoLikeURL,
             type: 'POST',
             contentType : 'application/json',
             headers: {"X-CSRFToken": csrf_token, "Authorization": localStorage.getItem('token')},
-            data: JSON.stringify({ like: true, dislike: false}), 
+            data: JSON.stringify(likeDislikeData), 
+            error: function(err) {
+                console.log(err.status);
+                console.log(err);
+            },
+            success: function(data) {
+                console.log(data);
+                location.reload();
+            }
+        });
+    }
+
+    function dislikeBtn(id, like, dislike) {
+        // if (localStorage.getItem("token") === null) {
+        //     location.href = 'http://127.0.0.1:8000/login';
+        // }
+        isLoggedIn();
+
+        let videoLikeURL = 'http://127.0.0.1:8000/video-api/like-or-dislike/' + id;
+        
+        let likeDislikeData = {
+            'like': like,
+            'dislike': dislike
+        }
+
+        console.log('on-click-data: ', likeDislikeData);
+
+        $.ajax({
+            url: videoLikeURL,
+            type: 'POST',
+            contentType : 'application/json',
+            headers: {"X-CSRFToken": csrf_token, "Authorization": localStorage.getItem('token')},
+            data: JSON.stringify(likeDislikeData), 
             error: function(err) {
                 console.log(err.status);
                 console.log(err);
