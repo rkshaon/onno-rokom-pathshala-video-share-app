@@ -117,16 +117,13 @@ def get_video(request, video_id):
 @api_view(['GET'])
 def get_video_details(request, video_id):
     video = Videoes.objects.get(youtube_video_id=video_id)
-    # print(video)
-    # print(Videoes.objects.get(youtube_video_id=video_id).uploaded_by.name)
-    # like = VideoLikeDislike.objects.filter(video_id=video, like=True)
+    
     liker = []
     disliker = []
 
     for d in VideoLikeDislike.objects.filter(video_id=video, like=True):
         liker.append(d.given_by.name)
-
-    # print('liker: ', liker)
+        
     for d in VideoLikeDislike.objects.filter(video_id=video, dislike=True):
         disliker.append(d.given_by.name)
 
@@ -140,6 +137,7 @@ def get_video_details(request, video_id):
         'status': True,
         'data': data,
     })
+
 
 @api_view(['POST'])
 def increase_video_view_count(request, video_id):

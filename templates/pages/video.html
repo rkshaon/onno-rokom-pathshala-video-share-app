@@ -161,36 +161,37 @@
             headers: {"X-CSRFToken": csrf_token, "Authorization": localStorage.getItem('token')},
             error: function(err) {
                 console.log(err.status);
-                // console.log(err);
             },
             success: function(data) {
                 console.log(data);
                 let div_content = '<div class="card">';
                 div_content += '<div class="card-body">';
                 div_content += 'Uploader: <b><i>' + String(data.data.uploader) + '</i></b>';
-                // div_content += '<div class="row" style="background-color: green;">';
-                // div_content += '<div class="col-3>';
-                div_content += '<br>';
-                div_content += '<br>';
-                div_content += '<b>Liker</b>';
-                data.data.liker.forEach(element => {
-                    // console.log(element);
-                    div_content += '<p>' + element + '</p>';
-                });
-                div_content += '<br>';
-                div_content += '<br>';
-                div_content += '<b>Disliker</b>';
-                data.data.disliker.forEach(element => {
-                    // console.log(element);
-                    div_content += '<p>' + element + '</p>';
-                });
-                // div_content += '</div>';
-                // div_content += '</div>';
+                
+                if (data.data.liker.length > 0) {
+                    div_content += '<br>';
+                    div_content += '<br>';
+                    div_content += '<b>Liker</b>';
+                    
+                    data.data.liker.forEach(element => {
+                        div_content += '<p>' + element + '</p>';
+                    });
+                }                
+
+                if (data.data.disliker.length > 0) {
+                    div_content += '<br>';
+                    div_content += '<br>';
+                    div_content += '<b>Disliker</b>';
+                    
+                    data.data.disliker.forEach(element => {
+                        div_content += '<p>' + element + '</p>';
+                    });
+                }
+                
                 div_content += '</div>';
                 div_content += '</div>';
 
                 document.getElementById("video-details").innerHTML = div_content;
-                // location.reload();
             }
         });        
     }
