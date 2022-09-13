@@ -97,9 +97,6 @@
     }
 
     function likeBtn(id, like, dislike) {
-        // if (localStorage.getItem("token") === null) {
-        //     location.href = 'http://127.0.0.1:8000/login';
-        // }
         isLoggedIn();
 
         let videoLikeURL = 'http://127.0.0.1:8000/video-api/like-or-dislike/' + id;
@@ -108,8 +105,6 @@
             'like': like,
             'dislike': dislike
         }
-
-        console.log('on-click-data: ', likeDislikeData);
 
         $.ajax({
             url: videoLikeURL,
@@ -129,9 +124,6 @@
     }
 
     function dislikeBtn(id, like, dislike) {
-        // if (localStorage.getItem("token") === null) {
-        //     location.href = 'http://127.0.0.1:8000/login';
-        // }
         isLoggedIn();
 
         let videoLikeURL = 'http://127.0.0.1:8000/video-api/like-or-dislike/' + id;
@@ -140,8 +132,6 @@
             'like': like,
             'dislike': dislike
         }
-
-        console.log('on-click-data: ', likeDislikeData);
 
         $.ajax({
             url: videoLikeURL,
