@@ -4,8 +4,8 @@
 
 {% block content%}
 <div class="container">
-    <div class="row" id="video-details">
-    </div>
+    <div class="row" id="video">
+    </div>    
 </div>
 
 <script>
@@ -78,12 +78,13 @@
                     div_content += '<button class="btn" onclick="dislikeBtn(' + "'" + String(videoID) + "','false','true'" + ')">Dislike</button><b>' + data.data['disliked'].length + '</b>'
                 }
                 
-                div_content += '<button class="btn">Details</button>'
+                div_content += '<button class="btn" onclick="detailsBtn(' + "'" + String(videoID) + "'" + ')">Details</button>'
                 div_content += '</div>'
                 div_content += '</div>'
+                div_content += '<div id="video-details"></div>'
                 div_content += '</div>'
     
-                document.getElementById("video-details").innerHTML = div_content;
+                document.getElementById("video").innerHTML = div_content;
             }
         });
 
@@ -148,6 +149,50 @@
                 location.reload();
             }
         });
+    }
+
+    function detailsBtn(video_id) {
+        let videoDetailsURL = 'http://127.0.0.1:8000/video-api/video-details/' + video_id;
+
+        $.ajax({
+            url: videoDetailsURL,
+            type: 'GET',
+            contentType : 'application/json',
+            headers: {"X-CSRFToken": csrf_token, "Authorization": localStorage.getItem('token')},
+            error: function(err) {
+                console.log(err.status);
+                // console.log(err);
+            },
+            success: function(data) {
+                console.log(data);
+                let div_content = '<div class="card">';
+                div_content += '<div class="card-body">';
+                div_content += 'Uploader: <b><i>' + String(data.data.uploader) + '</i></b>';
+                // div_content += '<div class="row" style="background-color: green;">';
+                // div_content += '<div class="col-3>';
+                div_content += '<br>';
+                div_content += '<br>';
+                div_content += '<b>Liker</b>';
+                data.data.liker.forEach(element => {
+                    // console.log(element);
+                    div_content += '<p>' + element + '</p>';
+                });
+                div_content += '<br>';
+                div_content += '<br>';
+                div_content += '<b>Disliker</b>';
+                data.data.disliker.forEach(element => {
+                    // console.log(element);
+                    div_content += '<p>' + element + '</p>';
+                });
+                // div_content += '</div>';
+                // div_content += '</div>';
+                div_content += '</div>';
+                div_content += '</div>';
+
+                document.getElementById("video-details").innerHTML = div_content;
+                // location.reload();
+            }
+        });        
     }
 </script>
 {% endblock %}

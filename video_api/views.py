@@ -7,6 +7,7 @@ import operator
 from video_share_app.utility import auth_user
 
 from video_api.serializers import VideoSerializer
+from video_api.serializers import VideoSerializerWithMoreDetails
 from video_api.serializers import VideoLikedOrDislikedSerializer
 
 from video_api.models import Videoes
@@ -19,8 +20,6 @@ def get_all_videoes(request):
 
     for d in data:
         video = Videoes.objects.get(youtube_video_id=d['youtube_video_id'])
-
-        like_or_dislike = VideoLikeDislike.objects.filter(video_id=video, like=True)
         
         d['like_count'] = len(VideoLikeDislike.objects.filter(video_id=video, like=True))
         d['dislike_count'] = len(VideoLikeDislike.objects.filter(video_id=video, dislike=True))
@@ -84,9 +83,10 @@ def get_uploaded_videoes(request):
 
 
 @api_view(['GET'])
-def get_video_details(request, video_id):
+def get_video(request, video_id):
     video = Videoes.objects.get(youtube_video_id=video_id)
     data = VideoSerializer(video, many=False).data
+    # print('video-details: ', VideoSerializerWithMoreDetails(video, many=False).data)
     liked = VideoLikeDislike.objects.filter(video_id=video, like=True)
     disliked = VideoLikeDislike.objects.filter(video_id=video, dislike=True)
     
@@ -107,6 +107,34 @@ def get_video_details(request, video_id):
     else:
         data['self_liked'] = False
         data['self_disliked'] = False
+
+    return Response({
+        'status': True,
+        'data': data,
+    })
+
+
+@api_view(['GET'])
+def get_video_details(request, video_id):
+    video = Videoes.objects.get(youtube_video_id=video_id)
+    # print(video)
+    # print(Videoes.objects.get(youtube_video_id=video_id).uploaded_by.name)
+    # like = VideoLikeDislike.objects.filter(video_id=video, like=True)
+    liker = []
+    disliker = []
+
+    for d in VideoLikeDislike.objects.filter(video_id=video, like=True):
+        liker.append(d.given_by.name)
+
+    # print('liker: ', liker)
+    for d in VideoLikeDislike.objects.filter(video_id=video, dislike=True):
+        disliker.append(d.given_by.name)
+
+    data = {
+        'uploader': video.uploaded_by.name,
+        'liker': liker,
+        'disliker': disliker,
+    }
 
     return Response({
         'status': True,
